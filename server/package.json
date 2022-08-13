@@ -1,0 +1,49 @@
+{
+  "name": "remotetouchpad",
+  "version": "0.0.1",
+  "description": "",
+  "main": "./dist/index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "cp-files": "cp -rf ./src/assets ./dist/ && cp ./src/index.html ./dist/",
+    "build:ts": "yarn cp-files && yarn run tsc",
+    "build:tsw": "yarn cp-files && yarn run tsc -w",
+    "electron-start": "electron .",
+    "dev": "yarn build:ts && yarn electron-start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com"
+  },
+  "keywords": [
+    "remote",
+    "mouse",
+    "keyboard"
+  ],
+  "author": "Norton Pablo Gonçalves",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/issues"
+  },
+  "homepage": "https://github.com",
+  "devDependencies": {
+    "@types/electron": "^1.6.10",
+    "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "concurrently": "^7.3.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^3.4.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "prettier": "^2.7.1",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "electron": "^20.0.1",
+    "express": "^4.18.1",
+    "socket.io": "^4.5.1"
+  }
+}
