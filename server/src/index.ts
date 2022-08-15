@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Tray, Menu } from 'electron';
 import path from 'path';
 import { Server } from './server';
+import { socket } from './providers/Socket';
 
 type CreateTrayParams = {
   win: BrowserWindow;
@@ -38,26 +39,37 @@ function createWindow() {
   return { win };
 }
 
-const { server } = Server();
+async function main() {
+  try {
+    const server = new Server(socket);
+    const { sv } = await server.execute();
 
-app.whenReady().then(() => {
-  const { win } = createWindow();
-  createTray({ win });
+    app.whenReady().then(() => {
+      const { win } = createWindow();
+      createTray({ win });
 
-  app.on('browser-window-blur', () => {
-    win.hide();
-  });
+      app.on('browser-window-blur', () => {
+        win.hide();
+      });
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
-  });
-});
+      app.on('activate', () => {
+        if (BrowserWindow.getAllWindows().length === 0) {
+          createWindow();
+        }
+      });
+    });
 
-app.on('window-all-closed', () => {
-  server.close();
-  if (process.platform !== 'darwin') {
-    app.quit();
+    app.on('window-all-closed', () => {
+      sv.close();
+      if (process.platform !== 'darwin') {
+        app.quit();
+      }
+    });
+    return 0;
+  } catch (error) {
+    console.error(error);
+    return 1;
   }
-});
+}
+
+main();
