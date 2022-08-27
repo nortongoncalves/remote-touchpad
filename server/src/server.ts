@@ -3,6 +3,8 @@ import { createServer } from 'http';
 import { SocketIO, Socket } from './providers/Socket/SocketIO';
 
 class Server {
+  private sockets: Socket[] = [];
+
   constructor(private readonly socket: SocketIO) {}
 
   async execute() {
@@ -12,17 +14,14 @@ class Server {
     const { io } = await this.socket.create({
       srv: server,
     });
-    let sockets: Socket[] = [];
 
     io.on('connection', socket => {
-      this.disconnectSocketsSameAddress(sockets, socket.handshake.address);
-      sockets = this.cleanSockets(sockets);
-      sockets.push(socket);
-      console.log(`socket: ${socket.id} connected`);
+      this.addSockets(socket);
+      console.info(`socket: ${socket.id} connected`);
 
       socket.on('disconnect', () => {
-        console.log(`socket: ${socket.id} disconnected`);
-        sockets = sockets.filter(({ id }) => socket.id !== id);
+        console.info(`socket: ${socket.id} disconnected`);
+        this.sockets = this.sockets.filter(({ id }) => socket.id !== id);
         socket.disconnect();
       });
     });
@@ -40,7 +39,13 @@ class Server {
     return { sv: server, statusListen };
   }
 
-  cleanSockets(sockets: Socket[]) {
+  addSockets(socket: Socket) {
+    this.disconnectSocketsSameAddress(this.sockets, socket.handshake.address);
+    this.sockets = this.cleanSocketsDisconnected(this.sockets);
+    this.sockets.push(socket);
+  }
+
+  cleanSocketsDisconnected(sockets: Socket[]) {
     return sockets.filter(socket => socket.connected);
   }
 
