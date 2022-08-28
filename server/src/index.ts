@@ -2,6 +2,7 @@ import { app, BrowserWindow, Tray, Menu } from 'electron';
 import path from 'path';
 import { Server } from './server';
 import { socket } from './providers/Socket';
+import testAddon from '../build/Release/testaddon.node';
 
 type CreateTrayParams = {
   win: BrowserWindow;
@@ -43,7 +44,7 @@ async function main() {
   try {
     const server = new Server(socket);
     const { sv } = await server.execute();
-
+    console.log('testAddon: ', testAddon.hello());
     app.whenReady().then(() => {
       const { win } = createWindow();
       createTray({ win });
