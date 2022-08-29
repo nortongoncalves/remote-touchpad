@@ -2,7 +2,6 @@ import { app, BrowserWindow, Tray, Menu } from 'electron';
 import path from 'path';
 import { Server } from './server';
 import { socket } from './providers/Socket';
-import moveCursorTest from '../build/Release/ControlMouseAddon.node';
 
 type CreateTrayParams = {
   win: BrowserWindow;
@@ -44,7 +43,6 @@ async function main() {
   try {
     const server = new Server(socket);
     const { sv } = await server.execute();
-    moveCursorTest.moveCursor(10, 50);
     app.whenReady().then(() => {
       const { win } = createWindow();
       createTray({ win });
