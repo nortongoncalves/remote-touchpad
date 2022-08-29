@@ -11,8 +11,8 @@
     "build:tsw": "yarn cp-files && yarn run tsc -w",
     "electron-start": "electron .",
     "dev": "yarn build:ts && yarn electron-start",
-    "gyp-build": "node-gyp rebuild",
-    "gyp-clean": "node-gyp clean"
+    "gyp:build": "node-gyp rebuild",
+    "gyp:clean": "node-gyp clean"
   },
   "repository": {
     "type": "git",

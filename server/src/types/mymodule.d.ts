@@ -1,3 +1,3 @@
-declare module '*testaddon.node' {
-  export function hello(): string;
+declare module '*ControlMouseAddon.node' {
+  export function moveCursor(x: int, y: int): string;
 }
