@@ -2,10 +2,10 @@
   "name": "server",
   "productName": "server",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "server for communication between the app and the operating system to control the mouse",
   "main": ".vite/build/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "electron-forge start -- --max-old-space-size=4049",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
@@ -21,6 +21,8 @@
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron-forge/plugin-vite": "^7.4.0",
     "@electron/fuses": "^1.8.0",
+    "@types/express": "^4.17.21",
+    "@types/ws": "^8.5.12",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "electron": "31.4.0",
@@ -37,6 +39,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "electron-squirrel-startup": "^1.0.1",
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  },
+  "optionalDependencies": {
+    "bufferutil": "^4.0.8",
+    "utf-8-validate": "^6.0.4"
   }
 }
