@@ -1,5 +1,6 @@
 interface Window {
   electronAPI: {
-    onLocalIp: (callback: (data: string[]) => void) => void;
+    onServerData: (callback: unknown) => void;
+    setServerData: (value: unknown) => void;
   };
 }

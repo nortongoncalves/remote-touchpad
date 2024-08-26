@@ -26,10 +26,13 @@
  * ```
  */
 
+import { ServerData } from './entities/ServerData';
 import './index.css';
 
 function main() {
-  window.electronAPI.onLocalIp(data => console.log('data: ', data))
+  window.electronAPI.onServerData(({localIp}: ServerData) => {
+    document.querySelector('#hostname').innerHTML = localIp;
+  });
   console.log('👋 This message is being logged by "renderer.ts", included via Vite');
 }
 

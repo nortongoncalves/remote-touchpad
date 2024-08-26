@@ -1,16 +1,14 @@
 import { Server } from 'socket.io';
 import express from 'express';
 import http from 'http';
+import { getLocalIp } from './utils/getLocalIp';
 
-export function websocket() {
+export async function websocket() {
   const app = express();
-  const httpServer = http.createServer(app);
+  const httpServer =  http.createServer(app);
   const wss = new Server(httpServer);
-  httpServer.listen(8087, '127.0.0.1');
+  const [localIp] = await getLocalIp();
+  httpServer.listen(8087, localIp);
 
-  wss.on("connection", (socket) => {
-    console.log(socket.id);
-  });
-
-  return {httpServer, wss};
+  return {httpServer, wss, localIp};
 }

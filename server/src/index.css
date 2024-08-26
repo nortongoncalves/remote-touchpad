@@ -1,16 +1,49 @@
 @import url('fonts.css');
+@import url('colors.css');
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   text-rendering: optimizeLegibility;
-}
-
-body {
   font-family: 'Montserrat',
     Arial, sans-serif;
-  margin: auto;
-  max-width: 38rem;
-  padding: 2rem;
+}
+
+main {
+  display: flex;
+  flex: 1;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: var(--primary-black-color);
+  gap: 15px;
+}
+
+h1 {
+  color: var(--primary-white-color);
+  text-align: center;
+}
+
+section {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background-color: var(--secondary-black-color);
+}
+
+section > h2 {
+  font-size: 1.4rem;
+  color: var(--primary-white-color);
+}
+
+section > p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--primary-white-color);
 }

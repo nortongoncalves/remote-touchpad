@@ -1,6 +1,6 @@
 import os from 'os';
 
-export function getLocalIp() {
+export async function getLocalIp() {
   const networkInterfaces = os.networkInterfaces();
   const networkAddressSet = new Set<string>();
   for (const key in networkInterfaces) {
