@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Tray, Menu, nativeImage } from 'electron';
 import path from 'path';
 import { websocket } from './websocket';
 import { ServerData } from './entities/ServerData';
@@ -10,6 +10,21 @@ import { rightClickMouse } from './utils/rightClickMouse';
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
   app.quit();
+}
+
+async function createTray() {
+  const icon = nativeImage.createFromPath('./assets/icon.png');
+  const tray = new Tray(icon);
+  const contextMenu = Menu.buildFromTemplate([
+    { label: 'Item1', type: 'radio' },
+    { label: 'Item2', type: 'radio' },
+    { label: 'Item3', type: 'radio', checked: true },
+    { label: 'Item4', type: 'radio' }
+  ]);
+
+  tray.setContextMenu(contextMenu);
+  tray.setToolTip('This is my application');
+  tray.setTitle('This is my title');
 }
 
 async function createWindow() {
@@ -45,6 +60,7 @@ function sendServerData({ mainWindow, serverData }: { serverData: ServerData; ma
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  createTray();
   const { localIp, wss } = await websocket();
   const mainWindow = await createWindow();
   sendServerData({mainWindow, serverData: {localIp}});
